@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    image: backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URI=postgresql://user:password@postgres:5432/database
+      - OPENID_CLIENT_ID=your-client-id
+      - OPENID_CLIENT_SECRET=your-client-secret
+      - OPENID_PROVIDER_URL=https://openid-provider-url
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
